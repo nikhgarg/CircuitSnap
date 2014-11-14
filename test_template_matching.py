@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 #works, but only if the template size is same as size of object in the query image.
 img_rgb = cv2.imread('images/3.PNG',cv2.CV_LOAD_IMAGE_COLOR)
 img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
-template = cv2.imread('images/VoltageSourceTemplate.PNG',0)
+template = cv2.imread('images/ResistorTemplate_small.PNG',0)
 w, h = template.shape[::-1]
 
 res = cv2.matchTemplate(img_gray,template,cv2.TM_CCOEFF_NORMED)
