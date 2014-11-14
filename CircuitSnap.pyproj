@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7a5cf85c-eb9a-4546-bbb6-7ed79cb393ec}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>test_cannyedge.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+    <InterpreterVersion />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="images\1.PNG" />
+    <Content Include="images\10.PNG" />
+    <Content Include="images\11.PNG" />
+    <Content Include="images\12.PNG" />
+    <Content Include="images\13.PNG" />
+    <Content Include="images\2.PNG" />
+    <Content Include="images\3.PNG" />
+    <Content Include="images\4.PNG" />
+    <Content Include="images\5.PNG" />
+    <Content Include="images\6.PNG" />
+    <Content Include="images\7.PNG" />
+    <Content Include="images\8.PNG" />
+    <Content Include="images\9.PNG" />
+    <Content Include="images\hard.PNG" />
+    <Content Include="images\ResistorTemplate.PNG" />
+    <Content Include="images\VoltageSourceTemplate.png" />
+    <Content Include="res.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="test.py" />
+    <Compile Include="test_cannyedge.py" />
+    <Compile Include="test_limited_corners.py" />
+    <Compile Include="test_sift_features.py" />
+    <Compile Include="test_surf.py" />
+    <Compile Include="test_template_matching.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>
