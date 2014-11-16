@@ -42,7 +42,7 @@ model.train(samples,responses)
 
 ############################# testing part  #########################
 
-imgstring = "3";
+imgstring = "12";
 imgtype = ".PNG";
 im = cv2.imread("images/" + imgstring + imgtype,cv2.CV_LOAD_IMAGE_COLOR)
 out = np.zeros(im.shape,np.uint8)

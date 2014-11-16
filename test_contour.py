@@ -4,10 +4,16 @@ import cv2
 ############# does a pretty good job of finding all the elements besides resistors. Could probably do some machine learning to characterize the elements
 # from the rectangles that this generates.
 
+#things to add/change
+    #different SIZESMALLSAVED - increase
+    #start saving other information, such as the original area of the contour
+        #that will definitely help with things, as elements tend to remain the same size
+        #will have to decode as a ratio of max/min though, as size changes
+
 ##adapting from here: https://stackoverflow.com/questions/9413216/simple-digit-recognition-ocr-in-opencv-python
 # https://github.com/goncalopp/simple-ocr-opencv also can be a good guide (haven't checked the code out yet)
 
-imgstring = "7";
+imgstring = "1";
 imgtype = ".PNG";
 
 im = cv2.imread("images/" + imgstring + imgtype,cv2.CV_LOAD_IMAGE_COLOR)
