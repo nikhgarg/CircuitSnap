@@ -6,7 +6,8 @@ import cv2
 
 ##adapting from here: https://stackoverflow.com/questions/9413216/simple-digit-recognition-ocr-in-opencv-python
 # https://github.com/goncalopp/simple-ocr-opencv also can be a good guide (haven't checked the code out yet)
-im = cv2.imread('images/3.PNG',cv2.CV_LOAD_IMAGE_COLOR)
+
+im = cv2.imread('images/5.PNG',cv2.CV_LOAD_IMAGE_COLOR)
 im3 = im.copy();
 
 gray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
@@ -24,7 +25,7 @@ responses = []
 keys = [i for i in range(48,58)]
 
 for cnt in contours:
-    if cv2.contourArea(cnt)>1:
+    if cv2.contourArea(cnt)>15 :
         [x,y,w,h] = cv2.boundingRect(cnt)
         #element_only = thresh[range(y, y+h)]
         #element_only = element_only[:, range(x, x+w)]
