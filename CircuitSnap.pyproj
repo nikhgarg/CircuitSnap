@@ -40,6 +40,9 @@
     <Content Include="res.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="module1.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test.py" />
     <Compile Include="test_cannyedge.py" />
     <Compile Include="test_contour.py" />
@@ -47,6 +50,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="test_limited_corners.py" />
+    <Compile Include="test_preprocessing.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="test_sift.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test_sift_features.py" />
     <Compile Include="test_surf.py" />
     <Compile Include="test_template_matching.py" />

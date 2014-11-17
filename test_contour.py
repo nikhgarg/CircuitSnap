@@ -13,16 +13,20 @@ import cv2
 ##adapting from here: https://stackoverflow.com/questions/9413216/simple-digit-recognition-ocr-in-opencv-python
 # https://github.com/goncalopp/simple-ocr-opencv also can be a good guide (haven't checked the code out yet)
 
-imgstring = "1";
+imgstring = "4";
 imgtype = ".PNG";
+
+featurestype = "nothreshold/";
 
 im = cv2.imread("images/" + imgstring + imgtype,cv2.CV_LOAD_IMAGE_COLOR)
 im3 = im.copy();
 
 gray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
 thresh = cv2.adaptiveThreshold(gray,255,1,1,11,2)
+surf = cv2.SURF(400)
 
-SIZESMALLSAVED = 10;
+
+SIZESMALLSAVED = 20;
 
 #################      Now finding Contours         ###################
 
@@ -31,7 +35,7 @@ contours,hierarchy = cv2.findContours(thresh,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMP
 print thresh
 print np.shape(thresh)
 print np.shape(im);
-samples =  np.empty((0,100))
+samples =  np.empty((0,SIZESMALLSAVED*SIZESMALLSAVED))
 responses = []
 #keys = [i for i in range(48,58)]
 
@@ -43,8 +47,12 @@ for cnt in contours:
         #element_only = element_only[:, range(x, x+w)]
         #cv2.imshow('norm', element_only);
         cv2.rectangle(im,(x,y),(x+w,y+h),(0,0,255),2)
-        roi = thresh[y:y+h,x:x+w]
+        roi = gray[y:y+h,x:x+w]
+        kp, des = surf.detectAndCompute(roi,None)
+        print len(kp)
+        img=cv2.drawKeypoints(roi,kp,flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         roismall = cv2.resize(roi,(SIZESMALLSAVED,SIZESMALLSAVED))
+        cv2.imshow('surf',roismall);
         #cv2.imshow('norm',roi)
         #key = cv2.waitKey(0)
         cv2.imshow('norm', im);
@@ -66,8 +74,8 @@ print "training complete"
 
 path = "./trainingdata/";
 
-np.savetxt(path + imgstring+"generalsamples.data",samples)
-np.savetxt(path + imgstring+"generalresponses.data",responses)
+np.savetxt(path +featurestype + "samples/"+  imgstring+"generalsamples.data",samples)
+np.savetxt(path + featurestype +"responses/"+ imgstring+"generalresponses.data",responses)
 key = cv2.waitKey(0)
 
 #key for printing stuff:
