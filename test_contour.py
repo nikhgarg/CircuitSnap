@@ -13,7 +13,7 @@ import cv2
 ##adapting from here: https://stackoverflow.com/questions/9413216/simple-digit-recognition-ocr-in-opencv-python
 # https://github.com/goncalopp/simple-ocr-opencv also can be a good guide (haven't checked the code out yet)
 
-imgstring = "4";
+imgstring = "1";
 imgtype = ".PNG";
 
 featurestype = "nothreshold/";
@@ -40,7 +40,7 @@ responses = []
 #keys = [i for i in range(48,58)]
 
 for cnt in contours:
-    if cv2.contourArea(cnt)>1:
+    if cv2.contourArea(cnt)>15 :
         [x,y,w,h] = cv2.boundingRect(cnt)
         im = im3.copy();
         #element_only = thresh[range(y, y+h)]
