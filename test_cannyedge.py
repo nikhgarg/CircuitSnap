@@ -3,7 +3,6 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 import math
-import cv
 
 img_rgb = cv2.imread('images/3.PNG',cv2.CV_LOAD_IMAGE_COLOR)
 img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2GRAY)
