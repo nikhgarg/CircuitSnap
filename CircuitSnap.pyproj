@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7a5cf85c-eb9a-4546-bbb6-7ed79cb393ec}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>test_contourmachinelearning.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -40,7 +40,16 @@
     <Content Include="res.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="main.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="module1.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Preprocess.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReadImage.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="test.py" />
