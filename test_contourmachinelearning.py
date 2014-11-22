@@ -45,8 +45,7 @@ for root, _, files in os.walk(dirtocheck + samplespath):
             samples = [newSamples];
         else:
             samples = np.append(samples, [newSamples]);
-if isPhoto: #I honestly have no idea why samples shape is different for photos.
-    samples = samples[0];
+
 samples = samples[0];
 samples = samples.reshape(np.size(responses),np.size(samples)/np.size(responses)); 
 print samples

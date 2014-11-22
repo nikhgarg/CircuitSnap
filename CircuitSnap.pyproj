@@ -40,6 +40,12 @@
     <Content Include="res.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Features.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="main.py">
       <SubType>Code</SubType>
     </Compile>
@@ -53,6 +59,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="test.py" />
+    <Compile Include="Testing.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test_cannyedge.py" />
     <Compile Include="test_contour.py" />
     <Compile Include="test_contourmachinelearning.py">
@@ -68,6 +77,9 @@
     <Compile Include="test_sift_features.py" />
     <Compile Include="test_surf.py" />
     <Compile Include="test_template_matching.py" />
+    <Compile Include="Training.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images" />

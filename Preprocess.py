@@ -1,4 +1,5 @@
 import cv2;
+import numpy as np;
 
 def getImageToSendToContour(im, isPhoto):
     resized = []
@@ -10,4 +11,6 @@ def getImageToSendToContour(im, isPhoto):
     else:
         thresh = gray;
     thresh = cv2.adaptiveThreshold(thresh,255,adaptiveMethod = cv2.ADAPTIVE_THRESH_GAUSSIAN_C,thresholdType = cv2.THRESH_BINARY,blockSize = 11, C=2)
-    return thresh
+    return [thresh, gray]
+
+
