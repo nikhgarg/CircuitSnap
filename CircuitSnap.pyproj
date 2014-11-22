@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7a5cf85c-eb9a-4546-bbb6-7ed79cb393ec}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>test_contourmachinelearning.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -40,10 +40,28 @@
     <Content Include="res.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Features.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="main.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="module1.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Preprocess.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReadImage.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test.py" />
+    <Compile Include="Testing.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test_cannyedge.py" />
     <Compile Include="test_contour.py" />
     <Compile Include="test_contourmachinelearning.py">
@@ -59,6 +77,9 @@
     <Compile Include="test_sift_features.py" />
     <Compile Include="test_surf.py" />
     <Compile Include="test_template_matching.py" />
+    <Compile Include="Training.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images" />

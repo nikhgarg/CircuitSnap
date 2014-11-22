@@ -13,29 +13,41 @@ import cv2
 ##adapting from here: https://stackoverflow.com/questions/9413216/simple-digit-recognition-ocr-in-opencv-python
 # https://github.com/goncalopp/simple-ocr-opencv also can be a good guide (haven't checked the code out yet)
 
-imgstring = "1";
-imgtype = ".PNG";
-
-featurestype = "nothreshold/";
+imgstring = "sadiku1";
+isPhoto = False;
+if isPhoto:
+    imgtype = ".jpg";   
+    featurestype = "photo/";
+else:
+    imgtype = ".PNG";
+    featurestype = "fft/";
 
 im = cv2.imread("images/" + imgstring + imgtype,cv2.CV_LOAD_IMAGE_COLOR)
+resized = []
+if isPhoto:
+    im = cv2.resize(im, dsize = (0,0), fx = .1, fy = .1, interpolation = cv2.INTER_CUBIC);
 im3 = im.copy();
-
+out = np.zeros(im.shape,np.uint8)
 gray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
-thresh = cv2.adaptiveThreshold(gray,255,1,1,11,2)
+if isPhoto:
+    thresh = cv2.GaussianBlur(gray,(5,5),1)
+else:
+    thresh = gray;
+thresh = cv2.adaptiveThreshold(thresh,255,adaptiveMethod = cv2.ADAPTIVE_THRESH_GAUSSIAN_C,thresholdType = cv2.THRESH_BINARY,blockSize = 11, C=2)
+
 surf = cv2.SURF(400)
 
 
 SIZESMALLSAVED = 20;
 
 #################      Now finding Contours         ###################
-
+cv2.imshow('thresh',thresh);
 contours,hierarchy = cv2.findContours(thresh,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
 
 print thresh
 print np.shape(thresh)
 print np.shape(im);
-samples =  np.empty((0,SIZESMALLSAVED*SIZESMALLSAVED))
+samples =  np.empty((0,2*SIZESMALLSAVED*SIZESMALLSAVED))
 responses = []
 #keys = [i for i in range(48,58)]
 
@@ -52,6 +64,7 @@ for cnt in contours:
         print len(kp)
         img=cv2.drawKeypoints(roi,kp,flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         roismall = cv2.resize(roi,(SIZESMALLSAVED,SIZESMALLSAVED))
+        regionfft = abs(np.fft.fft2(roismall))
         cv2.imshow('surf',roismall);
         #cv2.imshow('norm',roi)
         #key = cv2.waitKey(0)
@@ -64,9 +77,16 @@ for cnt in contours:
         #elif key in keys:
             responses.append(ord(chr(key)))
             sample = roismall.reshape((1,SIZESMALLSAVED*SIZESMALLSAVED))
-            samples = np.append(samples,sample,0)
-            print sample
-            print responses
+            fftsample = regionfft.reshape((1, SIZESMALLSAVED*SIZESMALLSAVED));
+            print np.size(sample);
+            print np.size(fftsample);
+            print np.size(samples);
+            sample = np.append(sample,fftsample[0]);
+            print np.size(sample);
+            if np.size(samples) == 0:
+                samples = [sample];
+            else:
+                samples = np.append(samples,[sample],0);
 
 responses = np.array(responses,np.float32)
 responses = responses.reshape((responses.size,1))

@@ -13,7 +13,16 @@ SIZESMALLSAVED = 20;
 ## need to load from all images/datasets instead of just one dataset
 samples = None;
 responses = None;
-featurestype = "nothreshold/";
+isPhoto = False;
+
+imgstring = "1";
+if isPhoto:
+    imgtype = ".jpg";   
+    featurestype = "photo/";
+else:
+    imgtype = ".PNG";
+    featurestype = "fft/";
+    
 dirtocheck = "./trainingdata/"+featurestype;
 responsespath = "responses";
 samplespath = "samples";
@@ -36,8 +45,11 @@ for root, _, files in os.walk(dirtocheck + samplespath):
             samples = [newSamples];
         else:
             samples = np.append(samples, [newSamples]);
-samples = samples.reshape(np.size(responses),np.size(samples)/np.size(responses)); 
 
+samples = samples[0];
+samples = samples.reshape(np.size(responses),np.size(samples)/np.size(responses)); 
+print samples
+print np.size(samples);
 model = cv2.KNearest()
 model.train(samples,responses)
 
@@ -73,7 +85,12 @@ for cnt in contours:
         roismall = cv2.resize(roi,(SIZESMALLSAVED,SIZESMALLSAVED))
         roismall = roismall.reshape((1,SIZESMALLSAVED*SIZESMALLSAVED))
         roismall = np.float32(roismall)
-        retval, results, neigh_resp, dists = model.find_nearest(roismall, k = 1)
+        regionfft = abs(np.fft.fft2(roismall))
+        fftsample = regionfft.reshape((1, SIZESMALLSAVED*SIZESMALLSAVED));
+        sample = np.float32([np.append(roismall,fftsample[0])]);
+        print sample
+        print np.size(sample)
+        retval, results, neigh_resp, dists = model.find_nearest(sample, k = 1)
         string = str(chr((results[0][0])))
         cv2.putText(out,string,(x,y+h),0,1,(0,255,0))
 cv2.imshow('orig', gray);
