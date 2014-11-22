@@ -1,13 +1,14 @@
 import cv2;
 import numpy as np;
 import os;
+import Classification;
 
-def setUpTesting(SamplesSize, featurestype, model):
+def setUpTesting(SamplesSize, featurestype, modeltype, model):
     dirtocheck = "./trainingdata/"+featurestype;
     responsespath = "responses";
     samplespath = "samples";
     responses = None;
-    samples = None;
+    samples = [];
     for root, _, files in os.walk(dirtocheck + responsespath):
         for f in files:
             fullpath = os.path.join(root, f)
@@ -23,12 +24,14 @@ def setUpTesting(SamplesSize, featurestype, model):
             fullpath = os.path.join(root, f)
             print f
             newSamples = np.loadtxt(fullpath, np.float32)
-            if samples is None:
-                samples = [newSamples];
-            else:
-                samples = np.append(samples, [newSamples]);
-    samples = samples[0];
-    samples = samples.reshape(np.size(responses),np.size(samples)/np.size(responses)); 
-    model.train(samples,responses)
+            print newSamples
+            samples = np.append(samples, [newSamples]);
+            print samples
+    print len(samples)
+    print samples
+    print len(responses)
+    samples = np.array(samples.reshape(np.size(responses),np.size(samples)/np.size(responses)), np.float32); 
+    print samples
+    Classification.trainModel(modeltype, model, responses, samples);
     return [responses, samples]
 

@@ -9,23 +9,26 @@ import Classes;
 from Classes import Mode;
 from Classes import FeatureLabels;
 import os;
+import Classification;
 
 SIZESMALLSAVED = 20;
 
 FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT : pow(SIZESMALLSAVED, 2)}; 
 path = "./trainingdata/";
-
+MODELTYPES = ["svm", "knn"];
 # paramaters
-isPhoto = False;
+isPhoto = True;
 mode = Mode.TESTING; #TESTING
-featureLabels = [FeatureLabels.PIXEL];
+featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT];
 featuresdirectory = "";
+modeltype = MODELTYPES[0];
+    
+imgname = "photo3cropped"
+model = Classification.createModel(modeltype);
+#########################
 for i in featureLabels:
     featuresdirectory += str(i);
 featuresdirectory += "/"
-imgname = "sadiku2"
-model = cv2.KNearest()
-#########################
 
 im = ReadImage.readImage(imgname, isPhoto);
 imcopy = im.copy();
@@ -38,13 +41,14 @@ SamplesSize = sum([FEATURESSIZE[feat] for feat in featureLabels])
 if (mode is Mode.TRAINING):
     [responses, samples] = Training.setUpTraining(SamplesSize);
 else:
-    [responses, samples] = Testing.setUpTesting(SamplesSize, featuresdirectory, model);
+    [responses, samples] = Testing.setUpTesting(SamplesSize, featuresdirectory, modeltype, model);
 
 for cnt in contours:
     if cv2.contourArea(cnt)>15 :
         [x,y,w,h] = cv2.boundingRect(cnt)
         imdraw = imcopy.copy();
         cv2.rectangle(imdraw,(x,y),(x+w,y+h),(0,0,255),2)
+        cv2.rectangle(im,(x,y),(x+w,y+h),(0,0,255),2)
         roi = gray[y:y+h,x:x+w]
         roismall = cv2.resize(roi,(SIZESMALLSAVED,SIZESMALLSAVED))
         roismallarray = np.float32(roismall.copy().reshape((1,SIZESMALLSAVED*SIZESMALLSAVED)));
@@ -57,14 +61,16 @@ for cnt in contours:
                 samples = [current_sample];
             else:
                 samples = np.append(samples,[current_sample],0);
-        else:    
-            retval, results, neigh_resp, dists = model.find_nearest(np.array([current_sample], np.float32), k = 1)
-            string = str(chr((results[0][0])))
+        else:
+            result = Classification.predict(modeltype, model, np.array([current_sample], np.float32));    
+            print result
+            string = str(chr(int(result)))
             cv2.putText(out,string,(x,y+h),0,1,(0,255,0))
 
 
 if mode is Mode.TESTING:
-    cv2.imshow('test',out);
+    cv2.imshow('input', im);
+    cv2.imshow('output',out);
 key = cv2.waitKey(0)
 
 if mode is Mode.TRAINING:

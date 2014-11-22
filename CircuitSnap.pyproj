@@ -43,6 +43,9 @@
     <Compile Include="Classes.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classification.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Features.py">
       <SubType>Code</SubType>
     </Compile>
@@ -50,6 +53,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="module1.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="module2.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Preprocess.py">
