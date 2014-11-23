@@ -3,7 +3,7 @@ import numpy as np;
 import os;
 import Classification;
 
-def setUpTesting(SamplesSize, featurestype, modeltype, model):
+def setUpTesting(SamplesSize, featurestype, modeltype):
     dirtocheck = "./trainingdata/"+featurestype;
     responsespath = "responses";
     samplespath = "samples";
@@ -27,11 +27,15 @@ def setUpTesting(SamplesSize, featurestype, modeltype, model):
             print newSamples
             samples = np.append(samples, [newSamples]);
             print samples
-    print len(samples)
-    print samples
-    print len(responses)
+    ninputs = len(samples)/len(responses);
     samples = np.array(samples.reshape(np.size(responses),np.size(samples)/np.size(responses)), np.float32); 
     print samples
-    Classification.trainModel(modeltype, model, responses, samples);
-    return [responses, samples]
+    noutputs = len(set(responses));
+    print ninputs
+    print noutputs
+    model = Classification.createModel(modeltype, ninputs, noutputs);
+    responses_order = list(set(responses));
+    responses_order.sort();
+    Classification.trainModel(modeltype, model, responses, samples, responses_order);
+    return [responses, samples, model, responses_order]
 

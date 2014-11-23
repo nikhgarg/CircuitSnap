@@ -15,16 +15,15 @@ SIZESMALLSAVED = 20;
 
 FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT : pow(SIZESMALLSAVED, 2)}; 
 path = "./trainingdata/";
-MODELTYPES = ["svm", "knn"];
+MODELTYPES = ["svm", "knn", "nn"];
 # paramaters
 isPhoto = True;
 mode = Mode.TESTING; #TESTING
 featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT];
 featuresdirectory = "";
-modeltype = MODELTYPES[0];
+modeltype = MODELTYPES[2];
     
 imgname = "photo3cropped"
-model = Classification.createModel(modeltype);
 #########################
 for i in featureLabels:
     featuresdirectory += str(i);
@@ -41,7 +40,7 @@ SamplesSize = sum([FEATURESSIZE[feat] for feat in featureLabels])
 if (mode is Mode.TRAINING):
     [responses, samples] = Training.setUpTraining(SamplesSize);
 else:
-    [responses, samples] = Testing.setUpTesting(SamplesSize, featuresdirectory, modeltype, model);
+    [responses, samples, model, responses_order] = Testing.setUpTesting(SamplesSize, featuresdirectory, modeltype);
 
 for cnt in contours:
     if cv2.contourArea(cnt)>15 :
