@@ -8,3 +8,4 @@ class FeatureLabels:
     FFT = 1;
     SIFT = 2;
     SURF = 3;
+    PCA = 4;

@@ -12,18 +12,18 @@ import os;
 
 SIZESMALLSAVED = 20;
 
-FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT : pow(SIZESMALLSAVED, 2)}; 
+FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT : pow(SIZESMALLSAVED, 2), FeatureLabels.PCA : pow(SIZESMALLSAVED, 1)}; 
 path = "./trainingdata/";
 
 # paramaters
-isPhoto = False;
+isPhoto = True;
 mode = Mode.TESTING; #TESTING
-featureLabels = [FeatureLabels.PIXEL];
+featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 for i in featureLabels:
     featuresdirectory += str(i);
 featuresdirectory += "/"
-imgname = "sadiku2"
+imgname = "photo1cropped"
 model = cv2.KNearest()
 #########################
 
@@ -64,7 +64,8 @@ for cnt in contours:
 
 
 if mode is Mode.TESTING:
-    cv2.imshow('test',out);
+    cv2.imshow('output',out);
+    cv2.imshow('image', im);
 key = cv2.waitKey(0)
 
 if mode is Mode.TRAINING:

@@ -24,10 +24,10 @@ def setUpTesting(SamplesSize, featurestype, model):
             print f
             newSamples = np.loadtxt(fullpath, np.float32)
             if samples is None:
-                samples = [newSamples];
+                samples = newSamples;
             else:
                 samples = np.append(samples, [newSamples]);
-    samples = samples[0];
+    #samples = samples[0];
     samples = samples.reshape(np.size(responses),np.size(samples)/np.size(responses)); 
     model.train(samples,responses)
     return [responses, samples]
