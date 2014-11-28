@@ -2,10 +2,24 @@ import cv2;
 import numpy as np;
 
 #components has [x, y, w, h, elemchar]
+
+#return format:
+#[x, y, w, h, ciruitelement, value_if_has_one]
+    #possible elements: mesh, window, circuit, voltagesource, resistor, currentsource
+    #                   m,      w,      c,      v,              r,          i
 def extractElements(components):
     components = dedup(components);
     components = combineLR(components);
-    components = combineNumbers(components);
+    [numbers, rest] = combineNumbers(components);
+
+    # separate into units, numbers, and the rest
+    #for the 'rest', combine into m, w, c, v, r, and i
+        #combine +-S into v, S into i
+
+    #to 'create elements', I need to connect a number to the correct unit to the correct source/resistor
+        # if one of them is missing (either unit or source), then 1 is enough, need to fake a location
+        # if value is missing, then need to figure something out...
+
     components = combineUnits(components);
     elements = createElements(components);
     return elements;
@@ -77,11 +91,17 @@ def combineNumbers(components):
         numbers = newnumbers;
 
     print numbers;
-    return componCopy + numbers;
+    return [numbers, componCopy]
 
 #combines numeric values with closest unit sign, creates sign if not there
 def combineUnits(components):
     units = ['o', 'v', 'a'];
+    return components;
+
+#multiply numbers by matching prefix before unit combination
+def combinePrefix(components):
+    prefi = {'m' : .001, 'k' : 1000};
+    return components;
 
 #creates elements from components and numeric values + units
 def createElements(components):
