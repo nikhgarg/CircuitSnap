@@ -55,9 +55,14 @@ model.train(samples,responses)
 
 ############################# testing part  #########################
 
+isPhoto = False;
+
+imgstring = "sadiku5";
+if isPhoto:
+    imgtype = ".jpg";   
+else:
+    imgtype = ".PNG";
 im = cv2.imread("images/" + imgstring + imgtype,cv2.CV_LOAD_IMAGE_COLOR)
-print "images/" + imgstring + imgtype;
-print np.size(im)
 resized = []
 if isPhoto:
     im = cv2.resize(im, dsize = (0,0), fx = .1, fy = .1, interpolation = cv2.INTER_CUBIC);

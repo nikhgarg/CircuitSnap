@@ -9,23 +9,26 @@ import Classes;
 from Classes import Mode;
 from Classes import FeatureLabels;
 import os;
+import Classification;
+import Postprocess;
 
 SIZESMALLSAVED = 20;
 
 FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT : pow(SIZESMALLSAVED, 2), FeatureLabels.PCA : pow(SIZESMALLSAVED, 1)}; 
 path = "./trainingdata/";
-
+MODELTYPES = ["svm", "knn", "nn"];
 # paramaters
-isPhoto = True;
+isPhoto = False;
 mode = Mode.TESTING; #TESTING
 featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
+modeltype = MODELTYPES[1];
+    
+imgname = "9"
+#########################
 for i in featureLabels:
     featuresdirectory += str(i);
-featuresdirectory += "/"
-imgname = "photo1cropped"
-model = cv2.KNearest()
-#########################
+featuresdirectory += "thresh/"
 
 im = ReadImage.readImage(imgname, isPhoto);
 imcopy = im.copy();
@@ -38,14 +41,18 @@ SamplesSize = sum([FEATURESSIZE[feat] for feat in featureLabels])
 if (mode is Mode.TRAINING):
     [responses, samples] = Training.setUpTraining(SamplesSize);
 else:
-    [responses, samples] = Testing.setUpTesting(SamplesSize, featuresdirectory, model);
+    [responses, samples, model, responses_order] = Testing.setUpTesting(SamplesSize, featuresdirectory, modeltype);
+
+all_components = []
+found_elements = [];
 
 for cnt in contours:
-    if cv2.contourArea(cnt)>15 :
+    if cv2.contourArea(cnt)>30 :
         [x,y,w,h] = cv2.boundingRect(cnt)
         imdraw = imcopy.copy();
         cv2.rectangle(imdraw,(x,y),(x+w,y+h),(0,0,255),2)
-        roi = gray[y:y+h,x:x+w]
+        cv2.rectangle(im,(x,y),(x+w,y+h),(0,0,255),2)
+        roi = toContour[y:y+h,x:x+w]
         roismall = cv2.resize(roi,(SIZESMALLSAVED,SIZESMALLSAVED))
         roismallarray = np.float32(roismall.copy().reshape((1,SIZESMALLSAVED*SIZESMALLSAVED)));
         current_sample = Features.calculateFeatures(featureLabels, roismall);
@@ -57,16 +64,21 @@ for cnt in contours:
                 samples = [current_sample];
             else:
                 samples = np.append(samples,[current_sample],0);
-        else:    
-            retval, results, neigh_resp, dists = model.find_nearest(np.array([current_sample], np.float32), k = 1)
-            string = str(chr((results[0][0])))
+        else:
+            result = Classification.predict(modeltype, model, np.array([current_sample], np.float32));
+            all_components += [[x, y, w, h, chr(int(result))]];    
+            print result
+            string = str(chr(int(result)))
             cv2.putText(out,string,(x,y+h),0,1,(0,255,0))
 
-
 if mode is Mode.TESTING:
+    cv2.imshow('input', im);
     cv2.imshow('output',out);
-    cv2.imshow('image', im);
-key = cv2.waitKey(0)
+    key = cv2.waitKey(0)
+    found_elements = Postprocess.extractElements(all_components);
+    print all_components;
+    print found_elements;
+    key = cv2.waitKey(0)
 
 if mode is Mode.TRAINING:
     responses = np.array(responses,np.float32)
