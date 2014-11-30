@@ -24,7 +24,7 @@ featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
-imgname = "photo3cropped"
+imgname = "photo6cropped"
 #########################
 for i in featureLabels:
     featuresdirectory += str(i);
@@ -35,6 +35,7 @@ imcopy = im.copy();
 out = np.zeros(im.shape,np.uint8)
 
 [toContour, gray] = Preprocess.getImageToSendToContour(im, isPhoto);
+print toContour;
 contours,hierarchy = cv2.findContours(toContour,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
 
 SamplesSize = sum([FEATURESSIZE[feat] for feat in featureLabels])
@@ -76,6 +77,7 @@ if mode is Mode.TESTING:
     cv2.imshow('output',out);
     key = cv2.waitKey(0)
     found_elements = Postprocess.extractElements(all_components);
+    found_elements = Features.templateMatching(gray, found_elements, isPhoto);
     print all_components;
     print found_elements;
     key = cv2.waitKey(0)
