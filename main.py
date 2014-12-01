@@ -25,7 +25,7 @@ featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
-imgname = "sadiku2"
+imgname = "sadiku5"
 #########################
 for i in featureLabels:
     featuresdirectory += str(i);

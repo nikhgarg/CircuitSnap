@@ -5,28 +5,15 @@ class kvlLoop(object):
 	topelements = []
 	bottomelements = []
 	rightelements = []
-	currents = []
-	voltages = []
 	coordinates = []
-	tolerance = 10
-
+ 
 	def __init__(self):
-		elements = []
-		leftelements = []
-		topelements = []
-		bottomelements = []
-		rightelements = []
-		currents = []
-		voltages = []
-		coordinates = []
-		tolerance = 10
+		print "creating loop"
 
 	def addElement(self,element):
 		success = False
 		x = (2*element[0] + element[2])/2
 		y = (2*element[1] + element[3])/2
-		# print "Here is the X",x,"Here is the Y",y
-		# print "Here is the loop x",self.coordinates[0],"Here is the loop y",self.coordinates[1],"Here is the loopx+w",self.coordinates[0]+self.coordinates[2],"Here is the loopy+h",self.coordinates[1]+self.coordinates[3]
 		if ((abs(self.coordinates[0] - x) < self.tolerance) and (self.coordinates[1] < y < (self.coordinates[1] + self.coordinates[3]))):
 			self.leftelements = self.leftelements + [element]
 			self.elements = self.elements + [element]
@@ -45,12 +32,8 @@ class kvlLoop(object):
 			success = True
 		return success
 
-	def solve():
-		return false
-
 	def changeTolerance(tolerance):
-		tolerance = tolerance
-		return false
+		self.tolerance = tolerance
 
 	def getElements(self):
 		return self.elements
