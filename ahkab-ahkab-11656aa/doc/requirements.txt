@@ -1,0 +1,7 @@
+sphinx
+numpy
+scipy
+sympy
+matplotlib
+alabaster
+nose

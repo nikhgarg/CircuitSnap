@@ -8,6 +8,7 @@ import Features;
 import Classes;
 from Classes import Mode;
 from Classes import FeatureLabels;
+import CircuitSolver;
 import os;
 import Classification;
 import Postprocess;
@@ -24,7 +25,7 @@ featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
-imgname = "sadiku5"
+imgname = "sadiku2"
 #########################
 for i in featureLabels:
     featuresdirectory += str(i);
@@ -81,6 +82,7 @@ if mode is Mode.TESTING:
     print all_components;
     print found_elements;
     key = cv2.waitKey(0)
+    CircuitSolver.solveCircuit(found_elements)
 
 if mode is Mode.TRAINING:
     responses = np.array(responses,np.float32)
