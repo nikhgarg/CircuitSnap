@@ -25,7 +25,7 @@ featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
-imgname = "sadiku2"
+imgname = "sadiku5"
 #########################
 for i in featureLabels:
     featuresdirectory += str(i);
@@ -82,7 +82,11 @@ if mode is Mode.TESTING:
     print all_components;
     print found_elements;
     key = cv2.waitKey(0)
-    CircuitSolver.solveCircuit(found_elements)
+    meshcurrents = CircuitSolver.solveCircuit(found_elements)
+    cv2.putText(im,str(meshcurrents),(20,20),cv2.FONT_HERSHEY_SIMPLEX, 1, 255)
+    cv2.imshow('input', im);
+    key = cv2.waitKey(0)
+
 
 if mode is Mode.TRAINING:
     responses = np.array(responses,np.float32)

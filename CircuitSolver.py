@@ -63,3 +63,4 @@ def solveCircuit(elements):
 	b = numpy.array(voltagecoeff)
 	x = numpy.linalg.solve(a, b)
 	print "the mesh currents are",x
+	return x
