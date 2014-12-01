@@ -18,13 +18,13 @@ FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT 
 path = "./trainingdata/";
 MODELTYPES = ["svm", "knn", "nn"];
 # paramaters
-isPhoto = True;
+isPhoto = False;
 mode = Mode.TESTING; #TESTING
 featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
-imgname = "photo6cropped"
+imgname = "sadiku5"
 #########################
 for i in featureLabels:
     featuresdirectory += str(i);

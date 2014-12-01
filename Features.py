@@ -69,7 +69,7 @@ def templateMatching(im,elements, isPhoto):
                     minDistance = 1000000;
                     for ifindmin in range(0,len(pts)): 
                         dist = Postprocess.distance(unmatched_resistors[i][0:5], pts[ifindmin]);
-                        if dist < minDistance and (ifindmin not in indicesToRemove) and dist < 30 and dist > 10:
+                        if dist < minDistance and (ifindmin not in indicesToRemove) and dist < 50 and dist > 10:
                             ii = ifindmin;
                             minDistance = dist;
                     if ii == -1:
@@ -92,7 +92,7 @@ def templateMatching(im,elements, isPhoto):
     print matched_resistors
     print unmatched_resistors
     for pt in matched_resistors:
-         cv2.rectangle(im, (pt[0], pt[1]), (pt[0] + pt[2], pt[1] + pt[3]), (255,255,255), 2)
+         cv2.rectangle(im, (pt[0], pt[1]), (pt[0] + pt[2], pt[1] + pt[3]), (0,0,0), 2)
     cv2.imshow('resistors', im);
     cv2.imshow('temp', template);
 
