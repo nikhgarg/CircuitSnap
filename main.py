@@ -27,6 +27,7 @@ featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
 imgname = "sadiku5"
+
 #########################
 for i in featureLabels:
     featuresdirectory += str(i);
@@ -86,7 +87,11 @@ if mode is Mode.TESTING:
     print all_components;
     print found_elements;
     meshcurrents = CircuitSolver.solveCircuit(found_elements)
-    cv2.putText(im,str(meshcurrents),(20,20),cv2.FONT_HERSHEY_SIMPLEX, 1, 255)
+    for i in range(0,len(meshcurrents[0])):
+        print "this current",meshcurrents[0][i],"is for the loop located at",meshcurrents[1][i]
+        x = int((2*meshcurrents[1][i][0] + meshcurrents[1][i][2])*0.45)
+        y = (2*meshcurrents[1][i][1] + meshcurrents[1][i][3])/2
+        cv2.putText(im,str(meshcurrents[0][i]) + "A",(x,y),0,1,(0,0,0))
     cv2.imshow('solved circuit', im);
     key = cv2.waitKey(0)
 
