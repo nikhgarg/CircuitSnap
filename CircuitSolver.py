@@ -35,7 +35,6 @@ def solveCircuit(elements):
 	for i in range(0,len(kvlLoops)):
 		clockwisesum = 0
 		kclequation = [0] * len(kvlLoops)
-		print "here are the elements",kvlLoops[i].getElements(),"for kvlLoop",i
 		for element in kvlLoops[i].getElements():
 			if element[4] == 'o':
 				clockwisesum += element[5]
@@ -64,10 +63,5 @@ def solveCircuit(elements):
 				voltagecoeff[i] += element[5]
 	a = numpy.array(kclequations)
 	b = numpy.array(voltagecoeff)
-	print "kclequations",kclequations
-	print "voltage coeffs",voltagecoeff
-	print "a =",a
-	print "b=",b
 	x = numpy.linalg.solve(a, b)
-	print "the mesh currents are",x
-	return x
+	return [x, meshs]
