@@ -21,14 +21,14 @@ def siftFeature(roismall):
 def pcaFeature(roismall):
     pca = RandomizedPCA();
     cp = roismall.copy();
-    print cp.shape;
-    print cp;
-    print "transforming"
+   # print cp.shape;
+   # print cp;
+   # print "transforming"
     tran = pca.fit(cp)
-    print tran
+   # print tran
     recov  = pca.explained_variance_;
-    print recov.shape;
-    print recov;
+   # print recov.shape;
+   # print recov;
     return recov;
 
 def calculateFeatures(featureLabels, roismall):
@@ -40,7 +40,7 @@ def calculateFeatures(featureLabels, roismall):
 
 
 def templateMatching(im,elements, isPhoto):
-    templates = ['images/resistorT4.PNG', 'images/resistorT2.PNG', 'images/resistorT2_0degree.PNG', 'images/resistorT4_0degree.PNG'];
+    templates = ['images/resistorT4.PNG', 'images/resistorT2.PNG', 'images/resistorT2_0degree.PNG', 'images/resistorT2_45degree.PNG', 'images/resistorT2_135degree.PNG','images/resistorT4_0degree.PNG'];
 
     unmatched_resistors = [];
     for elem in elements:
@@ -69,8 +69,8 @@ def templateMatching(im,elements, isPhoto):
                     ii = -1;
                     minDistance = 1000000;
                     for ifindmin in range(0,len(pts)): 
-                        dist = Postprocess.distance(unmatched_resistors[i][0:5], pts[ifindmin]);
-                        if dist < minDistance and (ifindmin not in indicesToRemove_ii) and dist < 40 and dist > 10:
+                        dist = Postprocess.distance_resistor(unmatched_resistors[i][0:5], pts[ifindmin]);
+                        if dist < minDistance and (ifindmin not in indicesToRemove_ii) and dist < 30:
                             ii = ifindmin;
                             minDistance = dist;
                     if ii == -1:

@@ -22,17 +22,17 @@ def setUpTesting(SamplesSize, featurestype, modeltype):
             fullpath = os.path.join(root, f)
             print f
             newSamples = np.loadtxt(fullpath, np.float32)
-            print newSamples
+            #print newSamples
             samples = np.append(samples, [newSamples]);
-            print samples
+            #print samples
     ninputs = len(samples)/len(responses);
     samples = np.array(samples.reshape(np.size(responses),np.size(samples)/np.size(responses)), np.float32); 
     responses = np.array(responses, np.float32);
-    print samples
-    print responses
+   # print samples
+   # print responses
     noutputs = len(set(responses));
-    print ninputs
-    print noutputs
+   # print ninputs
+   # print noutputs
     model = Classification.createModel(modeltype, ninputs, noutputs);
     responses_order = list(set(responses));
     responses_order.sort();

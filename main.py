@@ -20,13 +20,13 @@ FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT 
 path = "./trainingdata/";
 MODELTYPES = ["svm", "knn", "nn"];
 # paramaters
-isPhoto = True;
+isPhoto = False;
 mode = Mode.TESTING; #TESTING
 featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
-imgname = "photo34cropped"
+imgname = "1"
 #########################
 for i in featureLabels:
     featuresdirectory += str(i);
@@ -41,7 +41,7 @@ cv2.imshow('tocontour', toContour);
 #key = cv2.waitKey(0)
 
 print toContour;
-contours,hierarchy = cv2.findContours(toContour,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
+contours,hierarchy = cv2.findContours(toContour,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE) # RETR_LIST
 
 SamplesSize = sum([FEATURESSIZE[feat] for feat in featureLabels])
 if (mode is Mode.TRAINING):
@@ -73,7 +73,7 @@ for cnt in contours:
         else:
             result = Classification.predict(modeltype, model, np.array([current_sample], np.float32));
             all_components += [[x, y, w, h, chr(int(result))]];    
-            print result
+            #print result
             string = str(chr(int(result)))
             cv2.putText(out,string,(x,y+h),0,1,(0,255,0))
 

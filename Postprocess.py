@@ -191,5 +191,31 @@ def distance(element1, element2):
     b = np.array(locCenter2, np.float32);
     return np.linalg.norm(a-b)
 
+#returns 'distance' of 2 contours' -- probably do distance of center point
+def distance_resistor(elem, resistor):
+    #x, y, w, h
+    [x1, y1, w1, h1, cha1] = elem;
+    [x2, y2, w2, h2, cha2] = resistor;
+
+    #compare centers, top left to center, top right to center
+    locCenter1 = [x1 + w1/2, y1 + h1/2];
+    locCenter2 = [x2 + w2/2, y2 + h2/2];
+    a = np.array(locCenter1, np.float32);
+    b = np.array(locCenter2, np.float32);
+    dist1 = np.linalg.norm(a-b);
+
+    locCenter1 = [x1, y1];
+    locCenter2 = [x2 + w2/2, y2 + h2/2];
+    a = np.array(locCenter1, np.float32);
+    b = np.array(locCenter2, np.float32);
+    dist2 = np.linalg.norm(a-b);
+
+    locCenter1 = [x1 + w1, y1 + h1/2];
+    locCenter2 = [x2 + w2/2, y2 + h2/2];
+    a = np.array(locCenter1, np.float32);
+    b = np.array(locCenter2, np.float32);
+    dist3 = np.linalg.norm(a-b);
+    return min(dist1, dist2, dist3);
+
 def combineComponents(left, right, newvalue):
     return [left[0], int(round((left[1] + right[1])/2)), left[2] + right[2] + abs(left[0] - right[0]), max(left[3], right[3]), newvalue];
