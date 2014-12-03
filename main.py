@@ -26,7 +26,7 @@ featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
-imgname = "1"
+imgname = "photo21cropped"
 #########################
 for i in featureLabels:
     featuresdirectory += str(i);
