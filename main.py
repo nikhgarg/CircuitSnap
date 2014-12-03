@@ -20,13 +20,13 @@ FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT 
 path = "./trainingdata/";
 MODELTYPES = ["svm", "knn", "nn"];
 # paramaters
-isPhoto = True;
+isPhoto = False;
 mode = Mode.TESTING; #TESTING
 featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
-imgname = "photo21cropped"
+imgname = "sadiku5"
 #########################
 for i in featureLabels:
     featuresdirectory += str(i);
@@ -41,7 +41,7 @@ cv2.imshow('tocontour', toContour);
 #key = cv2.waitKey(0)
 
 print toContour;
-contours,hierarchy = cv2.findContours(toContour,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE) # RETR_LIST
+contours,hierarchy = cv2.findContours(toContour,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE) # RETR_LIST
 
 SamplesSize = sum([FEATURESSIZE[feat] for feat in featureLabels])
 if (mode is Mode.TRAINING):
@@ -80,15 +80,14 @@ for cnt in contours:
 if mode is Mode.TESTING:
     cv2.imshow('input', im);
     cv2.imshow('output',out);
-    key = cv2.waitKey(0)
+#    key = cv2.waitKey(0)
     found_elements = Postprocess.extractElements(all_components);
     found_elements = Features.templateMatching(gray, found_elements, isPhoto);
     print all_components;
     print found_elements;
-    key = cv2.waitKey(0)
     meshcurrents = CircuitSolver.solveCircuit(found_elements)
     cv2.putText(im,str(meshcurrents),(20,20),cv2.FONT_HERSHEY_SIMPLEX, 1, 255)
-    cv2.imshow('input', im);
+    cv2.imshow('solved circuit', im);
     key = cv2.waitKey(0)
 
 

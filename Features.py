@@ -96,7 +96,7 @@ def templateMatching(im,elements, isPhoto):
     for pt in matched_resistors:
          cv2.rectangle(im, (pt[0], pt[1]), (pt[0] + pt[2], pt[1] + pt[3]), (0,0,0), 2)
     cv2.imshow('resistors', im);
-    cv2.imshow('temp', template);
+ #   cv2.imshow('temp', template);
 
     key = cv2.waitKey(0)
     return elements;
