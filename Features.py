@@ -63,13 +63,14 @@ def templateMatching(im,elements, isPhoto):
                 pts = []
                 for pt in zip(*loc[::-1]):
                     pts += [[pt[0], pt[1], w, h, 'r']];
-                indicesToRemove = []
+                indicesToRemove_ii = []
+                indicesToRemove_i = []
                 for i in range(0, len(unmatched_resistors)):
                     ii = -1;
                     minDistance = 1000000;
                     for ifindmin in range(0,len(pts)): 
                         dist = Postprocess.distance(unmatched_resistors[i][0:5], pts[ifindmin]);
-                        if dist < minDistance and (ifindmin not in indicesToRemove) and dist < 50 and dist > 10:
+                        if dist < minDistance and (ifindmin not in indicesToRemove_ii) and dist < 40 and dist > 10:
                             ii = ifindmin;
                             minDistance = dist;
                     if ii == -1:
@@ -79,11 +80,12 @@ def templateMatching(im,elements, isPhoto):
                     matchresistor[1] = pts[ii][1];
                     matchresistor[2] = pts[ii][2];
                     matchresistor[3] = pts[ii][3];
-                    indicesToRemove += [i];
+                    indicesToRemove_ii += [ii];
+                    indicesToRemove_i  += [i];
                     matched_resistors += [matchresistor]
                 newunmatched = []
                 for i in range(0, len(unmatched_resistors)):
-                    if i not in indicesToRemove:
+                    if i not in indicesToRemove_i:
                         newunmatched += [unmatched_resistors[i]]
                 unmatched_resistors = newunmatched;
 

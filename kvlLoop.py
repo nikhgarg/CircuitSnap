@@ -1,5 +1,5 @@
 class kvlLoop(object):
-	tolerance = 10;
+	tolerance = 20;
 	elements = []
 	leftelements = []
 	topelements = []

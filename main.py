@@ -12,6 +12,7 @@ import CircuitSolver;
 import os;
 import Classification;
 import Postprocess;
+import math;
 
 SIZESMALLSAVED = 20;
 
@@ -19,13 +20,13 @@ FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT 
 path = "./trainingdata/";
 MODELTYPES = ["svm", "knn", "nn"];
 # paramaters
-isPhoto = False;
+isPhoto = True;
 mode = Mode.TESTING; #TESTING
 featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
-imgname = "sadiku5"
+imgname = "photo34cropped"
 #########################
 for i in featureLabels:
     featuresdirectory += str(i);
@@ -36,6 +37,9 @@ imcopy = im.copy();
 out = np.zeros(im.shape,np.uint8)
 
 [toContour, gray] = Preprocess.getImageToSendToContour(im, isPhoto);
+cv2.imshow('tocontour', toContour);
+#key = cv2.waitKey(0)
+
 print toContour;
 contours,hierarchy = cv2.findContours(toContour,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
 
