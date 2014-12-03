@@ -1,5 +1,5 @@
 class kvlLoop(object):
-	tolerance = 20;
+	tolerance = 25;
 	elements = []
 	leftelements = []
 	topelements = []
@@ -14,6 +14,10 @@ class kvlLoop(object):
 		success = False
 		x = (2*element[0] + element[2])/2
 		y = (2*element[1] + element[3])/2
+		print "the element",element
+		print "x",x
+		print "y",y
+		print "bottom thing", abs(self.coordinates[1] + self.coordinates[3] - y)
 		if ((abs(self.coordinates[0] - x) < self.tolerance) and (self.coordinates[1] < y < (self.coordinates[1] + self.coordinates[3]))):
 			self.leftelements = self.leftelements + [element]
 			self.elements = self.elements + [element]
@@ -22,7 +26,7 @@ class kvlLoop(object):
 			self.topelements = self.topelements + [element]
 			self.elements = self.elements + [element]
 			success = True
-		if ((abs(self.coordinates[1]+self.coordinates[3] - x) < self.tolerance) and (self.coordinates[1] < y < (self.coordinates[1] + self.coordinates[3]))):
+		if ((abs(self.coordinates[1] + self.coordinates[3] - y) < self.tolerance) and (self.coordinates[0] < x < (self.coordinates[0] + self.coordinates[2]))):
 			self.bottomelements = self.bottomelements + [element]
 			self.elements = self.elements + [element]
 			success = True
