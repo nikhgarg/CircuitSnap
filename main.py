@@ -20,13 +20,13 @@ FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT 
 path = "./trainingdata/";
 MODELTYPES = ["svm", "knn", "nn"];
 # paramaters
-isPhoto = False;
+isPhoto = True;
 mode = Mode.TESTING; #TESTING
 featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
-imgname = "sadiku5"
+imgname = "photo2cropped"
 
 #########################
 for i in featureLabels:
@@ -36,6 +36,8 @@ featuresdirectory += "thresh/"
 im = ReadImage.readImage(imgname, isPhoto);
 imcopy = im.copy();
 out = np.zeros(im.shape,np.uint8)
+
+outputcircuit = im.copy();
 
 [toContour, gray] = Preprocess.getImageToSendToContour(im, isPhoto);
 cv2.imshow('tocontour', toContour);
@@ -79,8 +81,8 @@ for cnt in contours:
             cv2.putText(out,string,(x,y+h),0,1,(0,255,0))
 
 if mode is Mode.TESTING:
-    cv2.imshow('input', im);
-    cv2.imshow('output',out);
+    cv2.imshow('contours', im);
+    cv2.imshow('recognized objects',out);
 #    key = cv2.waitKey(0)
     found_elements = Postprocess.extractElements(all_components);
     found_elements = Features.templateMatching(gray, found_elements, isPhoto);
@@ -91,8 +93,8 @@ if mode is Mode.TESTING:
         print "this current",meshcurrents[0][i],"is for the loop located at",meshcurrents[1][i]
         x = int((2*meshcurrents[1][i][0] + meshcurrents[1][i][2])*0.45)
         y = (2*meshcurrents[1][i][1] + meshcurrents[1][i][3])/2
-        cv2.putText(im,str(meshcurrents[0][i]) + "A",(x,y),0,1,(0,0,0))
-    cv2.imshow('solved circuit', im);
+        cv2.putText(outputcircuit,str(meshcurrents[0][i]) + "A",(x,y),0,1,(0,0,0))
+    cv2.imshow('solved circuit', outputcircuit);
     key = cv2.waitKey(0)
 
 
