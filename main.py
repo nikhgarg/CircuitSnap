@@ -20,13 +20,13 @@ FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT 
 path = "./trainingdata/";
 MODELTYPES = ["svm", "knn", "nn"];
 # paramaters
-isPhoto = True;
+isPhoto = False;
 mode = Mode.TESTING; #TESTING
 featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
-imgname = "photo2cropped"
+imgname = "3"
 
 #########################
 for i in featureLabels:
@@ -83,11 +83,11 @@ for cnt in contours:
 if mode is Mode.TESTING:
     cv2.imshow('contours', im);
     cv2.imshow('recognized objects',out);
-#    key = cv2.waitKey(0)
     found_elements = Postprocess.extractElements(all_components);
     found_elements = Features.templateMatching(gray, found_elements, isPhoto);
     print all_components;
     print found_elements;
+    key = cv2.waitKey(0)
     meshcurrents = CircuitSolver.solveCircuit(found_elements)
     for i in range(0,len(meshcurrents[0])):
         print "this current",meshcurrents[0][i],"is for the loop located at",meshcurrents[1][i]
