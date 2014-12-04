@@ -25,8 +25,8 @@ featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
    
-isPhoto = False;
-imgname = "5"
+isPhoto = True;
+imgname = "photo3"
 
 #########################
 for i in featureLabels:
@@ -99,6 +99,7 @@ if mode is Mode.TESTING:
         cv2.putText(outputcircuit,str(round(element[0],2)) + "V",(abs(element[1][0] - 23),element[1][1]+5),0,0.35,(0,0,255))
     outputcircuit = cv2.resize(outputcircuit, dsize = (0,0), fx = 2, fy = 2, interpolation = cv2.INTER_CUBIC);
     cv2.imshow('solved circuit', outputcircuit);
+    print found_elements;
     key = cv2.waitKey(0)
 
 
