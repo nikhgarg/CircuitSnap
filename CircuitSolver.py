@@ -6,6 +6,8 @@ def solveCircuit(elements):
 	meshs = []
 	kvlLoops = []
 	elementLocationMap = {"":0}
+	elementLoopMap = {"":[]}
+	stringifyLoop = {"":[]}
 	print "these are the meshes"
 	for element in elements:
 		if element[4] == 'm':
@@ -25,10 +27,13 @@ def solveCircuit(elements):
 			print "the coordinates",kvlLoops[i].coordinates
 			if kvlLoops[i].addElement(element):
 				print "successfully added an element",element
+				stringifyLoop[','.join(str(v) for v in element)] = element
 				if ','.join(str(v) for v in element) in elementLocationMap:
 					elementLocationMap[','.join(str(v) for v in element)] += (i+1)
+					elementLoopMap[','.join(str(v) for v in element)].append(i)
 				else:
 					elementLocationMap[','.join(str(v) for v in element)] = (i+1)
+					elementLoopMap[','.join(str(v) for v in element)] = [i]
 
 	kclequations = []	
 	voltagecoeff = [0] * len(kvlLoops)
@@ -41,6 +46,7 @@ def solveCircuit(elements):
 				if (elementLocationMap[','.join(str(v) for v in element)] - (i+1)) != 0:
 					kclequation[elementLocationMap[','.join(str(v) for v in element)] - i - 2] -= element[5]
 		kclequation[i] = clockwisesum
+		print "clockwisesum",clockwisesum
 		kclequations.append(kclequation)
 	#print kclequations
 
@@ -64,4 +70,13 @@ def solveCircuit(elements):
 	a = numpy.array(kclequations)
 	b = numpy.array(voltagecoeff)
 	x = numpy.linalg.solve(a, b)
-	return [x, meshs]
+	current  = 0
+	elementvoltages = []
+	for element in elementLoopMap.keys():
+		if (element != "") and (stringifyLoop[element][4] == 'o'):
+			if stringifyLoop[element][4] == 'o':
+				current = x[elementLoopMap[element][0]]
+			if len(elementLoopMap[element]) > 1:
+				current -= x[elementLoopMap[element][1]]
+			elementvoltages.append([stringifyLoop[element][5] * abs(current),stringifyLoop[element]])
+	return [x, meshs, elementvoltages]

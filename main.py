@@ -20,13 +20,13 @@ FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT 
 path = "./trainingdata/";
 MODELTYPES = ["svm", "knn", "nn"];
 # paramaters
-isPhoto = True;
+isPhoto = False;
 mode = Mode.TESTING; #TESTING
 featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
     
-imgname = "photo21cropped"
+imgname = "1"
 
 #########################
 for i in featureLabels:
@@ -94,7 +94,9 @@ if mode is Mode.TESTING:
         print "this current",meshcurrents[0][i],"is for the loop located at",meshcurrents[1][i]
         x = int((2*meshcurrents[1][i][0] + meshcurrents[1][i][2])*0.45)
         y = (2*meshcurrents[1][i][1] + meshcurrents[1][i][3])/2
-        cv2.putText(outputcircuit,str(meshcurrents[0][i]) + "A",(x,y),0,1,(0,0,0))
+        cv2.putText(outputcircuit,str(meshcurrents[0][i]) + "A",(x,y),0,0.5,(255,0,0))
+    for element in meshcurrents[2]:
+        cv2.putText(outputcircuit,str(element[0]) + "V",(element[1][0],element[1][1]),0,0.5,(0,255,0))
     cv2.imshow('solved circuit', outputcircuit);
     key = cv2.waitKey(0)
 
