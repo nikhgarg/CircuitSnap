@@ -12,7 +12,7 @@ def setUpTesting(SamplesSize, featurestype, modeltype):
     for root, _, files in os.walk(dirtocheck + responsespath):
         for f in files:
             fullpath = os.path.join(root, f)
-            print f
+ #           print f
             newResponses = np.loadtxt(fullpath, np.float32)
             newResponses = newResponses.reshape((newResponses.size,1));
             responses = np.append(responses, [newResponses]);
@@ -20,7 +20,7 @@ def setUpTesting(SamplesSize, featurestype, modeltype):
     for root, _, files in os.walk(dirtocheck + samplespath):
         for f in files:
             fullpath = os.path.join(root, f)
-            print f
+ #           print f
             newSamples = np.loadtxt(fullpath, np.float32)
             #print newSamples
             samples = np.append(samples, [newSamples]);

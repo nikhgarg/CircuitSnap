@@ -20,13 +20,13 @@ FEATURESSIZE = {FeatureLabels.PIXEL : pow(SIZESMALLSAVED, 2), FeatureLabels.FFT 
 path = "./trainingdata/";
 MODELTYPES = ["svm", "knn", "nn"];
 # paramaters
-isPhoto = False;
 mode = Mode.TESTING; #TESTING
 featureLabels = [FeatureLabels.PIXEL, FeatureLabels.FFT, FeatureLabels.PCA];
 featuresdirectory = "";
 modeltype = MODELTYPES[1];
-    
-imgname = "1"
+   
+isPhoto = False;
+imgname = "5"
 
 #########################
 for i in featureLabels:
@@ -88,15 +88,16 @@ if mode is Mode.TESTING:
     found_elements = Features.templateMatching(gray, found_elements, isPhoto);
     print all_components;
     print found_elements;
-    key = cv2.waitKey(0)
+ #   key = cv2.waitKey(0)
     meshcurrents = CircuitSolver.solveCircuit(found_elements)
     for i in range(0,len(meshcurrents[0])):
         print "this current",meshcurrents[0][i],"is for the loop located at",meshcurrents[1][i]
-        x = int((2*meshcurrents[1][i][0] + meshcurrents[1][i][2])*0.45)
-        y = (2*meshcurrents[1][i][1] + meshcurrents[1][i][3])/2
-        cv2.putText(outputcircuit,str(meshcurrents[0][i]) + "A",(x,y),0,0.5,(255,0,0))
+        x = int(meshcurrents[1][i][0] + meshcurrents[1][i][2]*0.33)
+        y = int(meshcurrents[1][i][1] + meshcurrents[1][i][3]*6/7)
+        cv2.putText(outputcircuit,str(round(meshcurrents[0][i],2)) + "A",(x,y),0,0.5,(255,0,0))
     for element in meshcurrents[2]:
-        cv2.putText(outputcircuit,str(element[0]) + "V",(element[1][0],element[1][1]),0,0.5,(0,255,0))
+        cv2.putText(outputcircuit,str(round(element[0],2)) + "V",(abs(element[1][0] - 23),element[1][1]+5),0,0.35,(0,0,255))
+    outputcircuit = cv2.resize(outputcircuit, dsize = (0,0), fx = 2, fy = 2, interpolation = cv2.INTER_CUBIC);
     cv2.imshow('solved circuit', outputcircuit);
     key = cv2.waitKey(0)
 
